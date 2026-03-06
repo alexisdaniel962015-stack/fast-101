@@ -18,6 +18,7 @@
 
 html {
     scroll-behavior: smooth;
+     scroll-padding-top: 70px;
 }
 
 /* Base */
@@ -55,12 +56,31 @@ nav {
     position: sticky;
     top: 0;
     z-index: 100;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
+
 
 .nav-brand {
     font-weight: 700;
     font-size: 1.2rem;
     color: var(--color-primary);
+    position: relative;
+    text-decoration: none;
+}
+
+.nav-brand::after {
+   content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #1a56db, #00d4ff);
+  transition: width 0.3s ease;
+}   
+
+.nav-brand:hover::after {
+    width: 100%;
 }
 
 .nav-toggle {
@@ -90,10 +110,21 @@ nav {
 }
 
 .nav-links a {
-    color: var(--color-text);
-    padding: 0.5rem 0;
-    display: block;
+    color: var(--color-primary);
+    text-decoration: none;
+    padding: 0.4rem 0.85rem;
+    border-radius: 8px;
+    background: transparent;
+  transition: color 0.22s ease;
+  
 }
+
+
+.nav-links a:hover {
+    background: var(--color-primary);
+  color: var(--color-white); /* blanco al hover */
+}
+
 
 /* Hero */
 #hero {
@@ -148,24 +179,85 @@ section {
 section h2 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
+    display: flex ;
+    align-items: center;
+    gap: 0.75rem;
+}
+/* Línea decorativa después del título */
+section h2::after{
+    content: "";
+    flex: 1;
+    height: 1px;    
+    background: var(--color-border);
 }
 
 #about p {
     margin-bottom: 1rem;
     color: var(--color-text-light);
 }
+/* About - Intereses */
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+/* Etiquetas de intereses */
+.about-tags span {
+  background: linear-gradient(135deg, #eff6ff, #f0f9ff);
+  border: 1px solid var(--color-border);
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  transition: background 0.2s, transform 0.2s;
+  cursor: default;
+}
+/* Efecto hover para las etiquetas */
+.about-tags span:hover {
+  background: linear-gradient(135deg, #dbeafe, #cffafe);
+  transform: translateY(-2px);
+}
 
 /* Skills */
 .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin-top: 1rem;
 }
-
+/* Tarjetas de habilidades */
 .skill-card {
     background-color: var(--color-white);
     border: 1px solid var(--color-border);
     border-radius: 0.5rem;
     padding: 1.5rem;
-    margin-bottom: 1rem;
+    flex: 1 1 calc(50% - 1rem);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+    cursor: default;
+}
+
+.skill-card::before {
+content: "";
+position: absolute;
+top: 0; left: 0; width:3px; height: 100%;
+background: linear-gradient(180deg,var(--color-primary),#00d4ff);
+transform: scale(0);
+transform-origin: top;
+transition: transform 0.3s ease;
+}
+/* Efecto hover para las tarjetas de habilidades */
+.skill-card:hover {
+    transform: translateY(-5px);/* Eleva la tarjeta */
+    box-shadow: 0 16px 48px rgba(37, 99, 235, 0.15);/* Sombra azul suave */
+    border-color: var(--color-primary);/* Resalta el borde al hacer hover */
+}
+/* Animación de la línea lateral al hacer hover */
+.skill-card:hover::before {
+    transform: scale(1);
 }
 
 .skill-card h3 {
@@ -185,6 +277,47 @@ section h2 {
     border-radius: 0.5rem;
     padding: 1.5rem;
     margin-bottom: 1rem;
+
+    position: relative;
+  overflow: hidden;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+/* Línea superior animada */
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #1a56db, #00d4ff);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+
+/* Fondo sutil */
+.project-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(26,86,219,0.03), rgba(0,212,255,0.03));
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(26, 86, 219, 0.15);
+  border-color: #93c5fd;
+}
+
+.project-card:hover::before {
+  transform: scaleX(1);
+}
+
+.project-card:hover::after {
+  opacity: 1;
 }
 
 .project-card h3 {
@@ -296,6 +429,8 @@ footer {
     font-size: 0.9rem;
 }
 
+
+
 /* =========================
    RESPONSIVE (min-width: 768px)
    ========================= */
@@ -317,7 +452,8 @@ footer {
     }
 
     .nav-links a:hover {
-        color: var(--color-primary);
+        background: var(--color-primary);
+        color: var(--color-white);
     }
 
     .footer-content {
